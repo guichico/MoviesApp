@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable name="viewModel"
+                  type="com.guilherme.moviesapp.viewmodel.MoviesListViewModel"/>
+    </data>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_movies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/grayExtraLight"/>
+
+        <ProgressBar
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerInParent="true"
+                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE}"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:padding="10dp"
+                android:layout_centerInParent="true"
+                android:text="@{viewModel.message}"
+                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ? View.GONE : View.VISIBLE }"/>
+
+    </RelativeLayout>
+
+</layout>
