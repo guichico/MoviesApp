@@ -13,7 +13,6 @@ import com.squareup.picasso.Picasso
 class MoviesAdapter(private var movies: List<Movie>) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: RowMovieBinding = DataBindingUtil.inflate(inflater, R.layout.row_movie, parent, false)
