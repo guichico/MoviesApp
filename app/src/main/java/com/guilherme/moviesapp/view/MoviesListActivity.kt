@@ -2,7 +2,9 @@ package com.guilherme.moviesapp.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.adapters.SearchViewBindingAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.guilherme.moviesapp.R
@@ -29,7 +31,18 @@ class MoviesListActivity : AppCompatActivity() {
             Observer { movies ->
                 binding.rvMovies.adapter = MoviesAdapter(movies)
             })
-        moviesViewModel.searchMovie("lion king")
+
+        binding.searchMovie.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                moviesViewModel.searchMovie(newText!!)
+                return false
+            }
+        }
+        )
 
         binding.executePendingBindings()
     }

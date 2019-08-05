@@ -16,24 +16,30 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
     private var disposableMovies: Disposable? = null
 
     fun searchMovie(query: String) {
+        movies.postValue(emptyList())
         loadingVisibility.postValue(true)
         message.postValue("")
 
         if (disposableMovies != null)
             disposableMovies!!.dispose()
 
-        disposableMovies = movieApi.searchMovies(query)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ searchResult ->
-                loadingVisibility.postValue(false)
+        if (query.isNullOrEmpty()) {
+            message.postValue("empty list")
+            loadingVisibility.postValue(false)
+        } else {
+            disposableMovies = movieApi.searchMovies(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ searchResult ->
+                    loadingVisibility.postValue(false)
 
-                if (searchResult.total_results > 0)
-                    movies.postValue(searchResult.results)
-                else message.postValue("empty list")
-            }, {
-                message.postValue("error on load")
-                loadingVisibility.postValue(false)
-            })
+                    if (searchResult.total_results > 0)
+                        movies.postValue(searchResult.results)
+                    else message.postValue("empty list")
+                }, {
+                    message.postValue("error on load")
+                    loadingVisibility.postValue(false)
+                })
+        }
     }
 }

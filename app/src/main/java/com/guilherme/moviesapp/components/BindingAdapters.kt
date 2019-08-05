@@ -22,7 +22,6 @@ object BindingAdapters {
             var calendar = Calendar.getInstance(locale)
             calendar.time = movieDate
 
-
             var color: Int
             var typeface: Typeface
             if (calendar.get(Calendar.YEAR) == Calendar.getInstance(locale).get(Calendar.YEAR)) {
