@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="com.guilherme.moviesapp.Constants"/>
+        <variable name="movie"
+                  type="com.guilherme.moviesapp.model.Movie"/>
+    </data>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="4dp">
+
+            <ImageView
+                    android:id="@+id/imgMovie"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:adjustViewBounds="true"
+                    app:imgUrl="@{Constants.getImgPath(500) + movie.backdrop_path}"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="5dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{movie.title}"
+                    android:textColor="@color/gray"
+                    android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/lbl_vote_average"
+                    android:textSize="16dp"/>
+
+            <TextView
+                    android:id="@+id/lbl_vote_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/img_star"
+                    android:textColor="@color/gray"
+                    android:text="@{Double.toString(movie.vote_average)}"
+                    android:textSize="16dp"/>
+
+            <ImageView
+                    android:id="@+id/img_star"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentRight="true"
+                    android:src="@android:drawable/star_big_off"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

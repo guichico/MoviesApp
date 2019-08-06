@@ -23,9 +23,7 @@ class MoviesAdapter(private var movies: List<Movie>) :
         holder.bind(movies[position])
     }
 
-    override fun getItemCount(): Int {
-        return movies.size
-    }
+    override fun getItemCount(): Int = movies.size
 
     class ViewHolder(private val binding: RowMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {

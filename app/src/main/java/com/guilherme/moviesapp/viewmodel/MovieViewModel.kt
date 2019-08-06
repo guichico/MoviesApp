@@ -10,13 +10,15 @@ import io.reactivex.schedulers.Schedulers
 
 class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
     val movie = MutableLiveData<Movie>()
+    val recommendations = MutableLiveData<List<Movie>>()
     val loadingVisibility = MutableLiveData<Boolean>()
     val detailsVisibility = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
     private var disposableMovie: Disposable? = null
+    private var disposableRecommendations: Disposable? = null
 
-    fun getMovie(movieId: Long) {
+    fun getMovieDetails(movieId: Long) {
         loadingVisibility.postValue(true)
         detailsVisibility.postValue(false)
         message.postValue("")
@@ -34,6 +36,20 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
             }, {
                 loadingVisibility.postValue(false)
                 message.postValue("error to load details data")
+            })
+    }
+
+    fun getRecommendations(movieId: Long) {
+        if (disposableRecommendations != null)
+            disposableRecommendations!!.dispose()
+
+        disposableRecommendations = movieApi.getRecommendations(movieId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({
+                recommendations.postValue(it.results)
+            }, {
+
             })
     }
 }

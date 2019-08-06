@@ -17,4 +17,7 @@ interface MovieApi {
 
     @GET("movie/{movie_id}")
     fun getMovie(@Path("movie_id") movieId: Long): Observable<Movie>
+
+    @GET("movie/{movie_id}/recommendations")
+    fun getRecommendations(@Path("movie_id") movieId: Long): Observable<SearchResult>
 }
