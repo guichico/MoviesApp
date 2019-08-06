@@ -1,5 +1,6 @@
-package com.guilherme.moviesapp.view
+package com.guilherme.moviesapp.view.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -8,6 +9,7 @@ import com.guilherme.moviesapp.R
 import com.guilherme.moviesapp.api.getImgPath
 import com.guilherme.moviesapp.databinding.RowMovieBinding
 import com.guilherme.moviesapp.model.Movie
+import com.guilherme.moviesapp.view.MovieActivity
 import com.squareup.picasso.Picasso
 
 class MoviesAdapter(private var movies: List<Movie>) :
@@ -34,6 +36,15 @@ class MoviesAdapter(private var movies: List<Movie>) :
                 .placeholder(R.color.grayLight)
                 .fit()
                 .into(binding.imgMovie)
+
+            binding.root.setOnClickListener {
+                val context = binding.root.context
+
+                val intent = Intent(context, MovieActivity::class.java)
+                intent.putExtra("movie", movie)
+
+                context.startActivity(intent)
+            }
 
             binding.movie = movie
             binding.executePendingBindings()

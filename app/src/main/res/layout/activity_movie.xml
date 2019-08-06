@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="viewModel"
+                  type="com.guilherme.moviesapp.viewmodel.MovieViewModel"/>
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:app="http://schemas.android.com/apk/res-auto"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+
+        <ImageView
+                android:id="@+id/imgMovie"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:adjustViewBounds="true"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.movie.title}"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.movie.overview}"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                app:value="@{viewModel.movie.revenue}"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{Integer.toString(viewModel.movie.runtime)}"
+                android:textColor="@color/black"
+                android:textSize="18dp"/>
+
+    </LinearLayout>
+
+</layout>

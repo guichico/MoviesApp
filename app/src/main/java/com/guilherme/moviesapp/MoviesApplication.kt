@@ -1,7 +1,8 @@
 package com.guilherme.moviesapp
 
 import androidx.multidex.MultiDexApplication
-import com.guilherme.moviesapp.di.moviesModule
+import com.guilherme.moviesapp.di.apiModule
+import com.guilherme.moviesapp.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -13,7 +14,8 @@ class MoviesApplication : MultiDexApplication() {
         startKoin {
             androidContext(applicationContext)
 
-            modules(moviesModule)
+            modules(apiModule)
+            modules(viewModelModule)
         }
     }
 }

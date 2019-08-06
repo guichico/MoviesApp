@@ -4,6 +4,8 @@ import android.graphics.Typeface
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.guilherme.moviesapp.R
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -36,5 +38,15 @@ object BindingAdapters {
             textView.setTextColor(textView.context.resources.getColor(color))
             textView.text = format.format(movieDate)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("value")
+    fun currencyFormat(textView: TextView, value: Int) {
+        val nf = NumberFormat.getCurrencyInstance(locale)
+        val pattern = (nf as DecimalFormat).toPattern()
+        val newPattern = pattern.replace("\u00A4", "").trim { it <= ' ' }
+        val newFormat = DecimalFormat(newPattern)
+        textView.text = newFormat.format(value)
     }
 }

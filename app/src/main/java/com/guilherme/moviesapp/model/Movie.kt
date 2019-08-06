@@ -15,7 +15,9 @@ data class Movie(
     val backdrop_path: String,
     val adult: Boolean,
     val overview: String,
-    val release_date: String
+    val release_date: String,
+    val revenue: Int,
+    val runtime: Int
 ) : Serializable {
     constructor() : this(
         0,
@@ -30,6 +32,8 @@ data class Movie(
         "",
         false,
         "",
-        ""
+        "",
+        0,
+        0
     )
 }

@@ -4,12 +4,12 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.adapters.SearchViewBindingAdapter
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.guilherme.moviesapp.R
 import com.guilherme.moviesapp.components.SpaceItemDecoration
 import com.guilherme.moviesapp.databinding.ActivityMoviesBinding
+import com.guilherme.moviesapp.view.adapters.MoviesAdapter
 import com.guilherme.moviesapp.viewmodel.MoviesListViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
