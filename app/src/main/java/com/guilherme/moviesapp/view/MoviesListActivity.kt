@@ -32,6 +32,8 @@ class MoviesListActivity : AppCompatActivity() {
                 binding.rvMovies.adapter = MoviesAdapter(movies)
             })
 
+        moviesViewModel.getPopularMovies()
+
         binding.searchMovie.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false

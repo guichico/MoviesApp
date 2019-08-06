@@ -9,6 +9,9 @@ import retrofit2.http.Query
 
 interface MovieApi {
 
+    @GET("movie/popular")
+    fun getPopularMovies(): Observable<SearchResult>
+
     @GET("search/movie")
     fun searchMovies(@Query("query") query: String): Observable<SearchResult>
 
