@@ -3,6 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.guilherme.moviesapp.Constants"/>
         <variable name="movie"
                   type="com.guilherme.moviesapp.model.Movie"/>
     </data>
@@ -21,7 +22,8 @@
                     android:id="@+id/imgMovie"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:adjustViewBounds="true"/>
+                    android:adjustViewBounds="true"
+                    app:imgUrl="@{Constants.getImgPath(200) + movie.poster_path}"/>
 
         </androidx.cardview.widget.CardView>
 

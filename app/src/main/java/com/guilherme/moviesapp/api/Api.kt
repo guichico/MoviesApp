@@ -1,11 +1,11 @@
 package com.guilherme.moviesapp.api
 
 import com.google.gson.GsonBuilder
+import com.guilherme.moviesapp.Constants
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-
 
 class Api {
 
@@ -19,7 +19,7 @@ class Api {
 
                     var url = originalHttpUrl
                         .newBuilder()
-                        .addQueryParameter("api_key", api_key)
+                        .addQueryParameter("api_key", Constants.api_key)
                         .build()
 
                     var request = original
@@ -32,7 +32,7 @@ class Api {
                 .build()
 
             Retrofit.Builder()
-                .baseUrl(api_path)
+                .baseUrl(Constants.api_path)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
                 .client(okHttpClient)

@@ -6,11 +6,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.guilherme.moviesapp.R
-import com.guilherme.moviesapp.api.getImgPath
 import com.guilherme.moviesapp.databinding.RowMovieBinding
 import com.guilherme.moviesapp.model.Movie
 import com.guilherme.moviesapp.view.MovieActivity
-import com.squareup.picasso.Picasso
 
 class MoviesAdapter(private var movies: List<Movie>) :
     RecyclerView.Adapter<MoviesAdapter.ViewHolder>() {
@@ -31,12 +29,6 @@ class MoviesAdapter(private var movies: List<Movie>) :
 
     class ViewHolder(private val binding: RowMovieBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
-            Picasso.get()
-                .load(getImgPath(200) + movie.poster_path)
-                .placeholder(R.color.grayLight)
-                .fit()
-                .into(binding.imgMovie)
-
             binding.root.setOnClickListener {
                 val context = binding.root.context
 

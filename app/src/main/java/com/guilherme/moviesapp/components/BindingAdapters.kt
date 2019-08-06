@@ -1,9 +1,11 @@
 package com.guilherme.moviesapp.components
 
 import android.graphics.Typeface
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.guilherme.moviesapp.R
+import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -11,15 +13,15 @@ import java.util.*
 
 object BindingAdapters {
 
-    private val locale = Locale("pt", "BR")
+    private val locale = Locale("en", "US")
 
     @JvmStatic
     @BindingAdapter("year")
-    fun yearFormat(textView: TextView, value: String) {
-        if (!value.isNullOrEmpty()) {
+    fun yearFormat(textView: TextView, year: String?) {
+        if (!year.isNullOrEmpty()) {
             val format = SimpleDateFormat("yyyy", locale)
 
-            var movieDate = format.parse(value)
+            var movieDate = format.parse(year)
 
             var calendar = Calendar.getInstance(locale)
             calendar.time = movieDate
@@ -48,5 +50,17 @@ object BindingAdapters {
         val newPattern = pattern.replace("\u00A4", "").trim { it <= ' ' }
         val newFormat = DecimalFormat(newPattern)
         textView.text = newFormat.format(value)
+    }
+
+    @JvmStatic
+    @BindingAdapter("imgUrl")
+    fun loadImage(imageView: ImageView, url: String?) {
+        if (!url.isNullOrEmpty()) {
+            Picasso.get()
+                .load(url)
+                .placeholder(R.color.grayLight)
+                .fit()
+                .into(imageView)
+        }
     }
 }
