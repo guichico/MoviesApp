@@ -20,20 +20,11 @@
                 app:iconifiedByDefault="false"/>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_popular_movies"
+                android:id="@+id/rv_movies"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/search_movie"
-                android:background="@color/grayExtraLight"
-                android:visibility="@{safeUnbox(viewModel.isSearching) ? View.GONE : View.VISIBLE }"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_searched_movies"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/search_movie"
-                android:background="@color/grayExtraLight"
-                android:visibility="@{safeUnbox(viewModel.isSearching) ? View.VISIBLE : View.GONE }"/>
+                android:background="@color/grayExtraLight"/>
 
         <ProgressBar
                 android:id="@+id/progress_bar"

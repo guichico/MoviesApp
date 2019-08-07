@@ -7,6 +7,7 @@ import com.guilherme.moviesapp.model.Movie
 import io.reactivex.disposables.CompositeDisposable
 
 class SearchMoviesDataSourceFactory(
+    private val query: String,
     private val compositeDisposable: CompositeDisposable,
     private val movieApi: MovieApi
 ) : DataSource.Factory<Int, Movie>() {
@@ -14,7 +15,7 @@ class SearchMoviesDataSourceFactory(
     val moviesDataSourceLiveData = MutableLiveData<SearchMoviesDataSource>()
 
     override fun create(): DataSource<Int, Movie> {
-        val moviesDataSource = SearchMoviesDataSource(movieApi, compositeDisposable)
+        val moviesDataSource = SearchMoviesDataSource(query, movieApi, compositeDisposable)
         moviesDataSourceLiveData.postValue(moviesDataSource)
         return moviesDataSource
     }

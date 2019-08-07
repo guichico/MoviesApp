@@ -1,20 +1,14 @@
 package com.guilherme.moviesapp.view
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.paging.PagedList
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.guilherme.moviesapp.R
-import com.guilherme.moviesapp.api.NetworkState
+import com.guilherme.moviesapp.components.NpaGridLayoutManager
 import com.guilherme.moviesapp.components.SpaceItemDecoration
 import com.guilherme.moviesapp.databinding.ActivityMoviesBinding
-import com.guilherme.moviesapp.model.Movie
 import com.guilherme.moviesapp.view.adapters.MoviesAdapter
 import com.guilherme.moviesapp.viewmodel.MoviesListViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -22,8 +16,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MoviesListActivity : AppCompatActivity() {
 
     private val moviesViewModel: MoviesListViewModel by viewModel()
-    private lateinit var popularMoviesAdapter: MoviesAdapter
-    private lateinit var searchedMoviesAdapter: MoviesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +24,10 @@ class MoviesListActivity : AppCompatActivity() {
         binding.viewModel = moviesViewModel
         binding.lifecycleOwner = this
 
-        setPopularMoviesList(binding)
-        setSearchedMoviesList(binding)
-        setErrorObserver(binding)
+        setMoviesList(binding)
+        //setErrorObserver(binding)
+
+        moviesViewModel.showSearchResults("")
 
         binding.searchMovie.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -42,7 +35,9 @@ class MoviesListActivity : AppCompatActivity() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                moviesViewModel.searchMovies(newText!!)
+                if (moviesViewModel.showSearchResults(newText))
+                    (binding.rvMovies.adapter as? MoviesAdapter)?.submitList(null)
+
                 return false
             }
         }
@@ -51,32 +46,16 @@ class MoviesListActivity : AppCompatActivity() {
         binding.executePendingBindings()
     }
 
-    private fun setPopularMoviesList(binding: ActivityMoviesBinding) {
-        popularMoviesAdapter = MoviesAdapter { moviesViewModel.retry() }
-        setMoviesList(binding.rvPopularMovies, popularMoviesAdapter, moviesViewModel.popularMovies)
+    private fun setMoviesList(binding: ActivityMoviesBinding) {
+        binding.rvMovies.layoutManager = NpaGridLayoutManager(this, 3)
+        binding.rvMovies.addItemDecoration(SpaceItemDecoration(3, 40))
+
+        val adapter = MoviesAdapter { moviesViewModel.retry() }
+        binding.rvMovies.adapter = adapter
+        moviesViewModel.searchedMovies.observe(this, Observer(adapter::submitList))
     }
 
-    private fun setSearchedMoviesList(binding: ActivityMoviesBinding) {
-        searchedMoviesAdapter = MoviesAdapter { moviesViewModel.retry() }
-        setMoviesList(binding.rvSearchedMovies, searchedMoviesAdapter, moviesViewModel.searchedMovies)
-    }
-
-    private fun setMoviesList(
-        recyclerView: RecyclerView,
-        adapter: MoviesAdapter,
-        movies: LiveData<PagedList<Movie>>
-    ) {
-        recyclerView.layoutManager = GridLayoutManager(this, 3)
-        recyclerView.addItemDecoration(SpaceItemDecoration(3, 40))
-
-        recyclerView.adapter = adapter
-        movies.observe(this,
-            Observer { movies ->
-                adapter.submitList(movies)
-            })
-    }
-
-    private fun setErrorObserver(binding: ActivityMoviesBinding) {
+    /*private fun setErrorObserver(binding: ActivityMoviesBinding) {
         binding.txtError.setOnClickListener { moviesViewModel.retry() }
         moviesViewModel.getState().observe(this, Observer { state ->
             binding.progressBar.visibility =
@@ -87,5 +66,5 @@ class MoviesListActivity : AppCompatActivity() {
                 popularMoviesAdapter.setState(state ?: NetworkState.DONE)
             }
         })
-    }
+    }*/
 }

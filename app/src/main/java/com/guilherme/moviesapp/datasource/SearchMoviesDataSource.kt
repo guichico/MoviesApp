@@ -12,13 +12,15 @@ import io.reactivex.functions.Action
 import io.reactivex.schedulers.Schedulers
 
 class SearchMoviesDataSource(
+    private val query: String,
     private val movieApi: MovieApi,
     private val compositeDisposable: CompositeDisposable
 ) : PageKeyedDataSource<Int, Movie>() {
-    val state: MutableLiveData<NetworkState> = MutableLiveData()
+
+    val state = MutableLiveData<NetworkState>()
+    val initial = MutableLiveData<NetworkState>()
 
     private var retryCompletable: Completable? = null
-    var query: String = ""
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
         state.postValue(NetworkState.LOADING)

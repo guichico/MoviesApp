@@ -17,6 +17,8 @@ class PopularMoviesDataSource(
 ) : PageKeyedDataSource<Int, Movie>() {
 
     val state: MutableLiveData<NetworkState> = MutableLiveData()
+    val initial: MutableLiveData<NetworkState> = MutableLiveData()
+
     private var retryCompletable: Completable? = null
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
