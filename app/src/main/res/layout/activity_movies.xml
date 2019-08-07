@@ -20,20 +20,31 @@
                 app:iconifiedByDefault="false"/>
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_movies"
+                android:id="@+id/rv_popular_movies"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/search_movie"
-                android:background="@color/grayExtraLight"/>
+                android:background="@color/grayExtraLight"
+                android:visibility="@{safeUnbox(viewModel.isSearching) ? View.GONE : View.VISIBLE }"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_searched_movies"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/search_movie"
+                android:background="@color/grayExtraLight"
+                android:visibility="@{safeUnbox(viewModel.isSearching) ? View.VISIBLE : View.GONE }"/>
 
         <ProgressBar
+                android:id="@+id/progress_bar"
                 android:layout_width="70dp"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:layout_below="@+id/search_movie"
-                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE}"/>
+                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE }"/>
 
         <TextView
+                android:id="@+id/txt_error"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="30dp"
