@@ -193,6 +193,8 @@
                                 android:layout_width="40dp"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
+                                android:indeterminateTint="@color/green"
+                                android:indeterminateTintMode="src_in"
                                 android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE}"/>
 
                         <TextView

@@ -47,6 +47,8 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_centerInParent="true"
+                android:indeterminateTint="@color/green"
+                android:indeterminateTintMode="src_in"
                 android:visibility="@{safeUnbox(viewModel.isFirstLoading) ?  View.VISIBLE : View.GONE}"/>
 
         <TextView
