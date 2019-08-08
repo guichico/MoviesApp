@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.guilherme.moviesapp.api.MovieApi
+import com.guilherme.moviesapp.api.NetworkState
 import com.guilherme.moviesapp.datasource.Listing
 import com.guilherme.moviesapp.datasource.PopularMoviesDataSourceFactory
 import com.guilherme.moviesapp.datasource.SearchMoviesDataSourceFactory
@@ -18,7 +19,7 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
         if (it.isNullOrEmpty()) getPopularMovies()
         else searchMovies(it)
     }
-    val searchedMovies = Transformations.switchMap(itemResult) { it.pagedList }!!
+    val movies = Transformations.switchMap(itemResult) { it.pagedList }!!
     val networkState = Transformations.switchMap(itemResult) { it.networkState }!!
     val refreshState = Transformations.switchMap(itemResult) { it.refreshState }!!
 
@@ -30,8 +31,8 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
 
     private val config = PagedList.Config.Builder()
         .setEnablePlaceholders(false)
-        .setInitialLoadSizeHint(20)
-        .setPageSize(20)
+        .setInitialLoadSizeHint(18)
+        .setPageSize(18)
         .build()
 
     init {
@@ -63,6 +64,10 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
             retry = { factory.moviesDataSourceLiveData.value?.retry() },
             refresh = { factory.moviesDataSourceLiveData.value?.invalidate() },
             refreshState = Transformations.switchMap(factory.moviesDataSourceLiveData) { it.initial })
+    }
+
+    fun getNetworkState(): NetworkState {
+        return networkState.value!!
     }
 
     fun refresh() {

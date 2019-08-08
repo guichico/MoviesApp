@@ -23,13 +23,19 @@ class PopularMoviesDataSource(
 
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
         state.postValue(NetworkState.LOADING)
+        initial.postValue(NetworkState.LOADING)
+
         compositeDisposable.add(
             movieApi.getPopularMovies(1)
                 .subscribe({
                     state.postValue(NetworkState.DONE)
+                    initial.postValue(NetworkState.DONE)
+
                     callback.onResult(it.results, null, 2)
                 }, {
                     state.postValue(NetworkState.ERROR)
+                    initial.postValue(NetworkState.ERROR)
+
                     setRetry(Action { loadInitial(params, callback) })
                 })
         )

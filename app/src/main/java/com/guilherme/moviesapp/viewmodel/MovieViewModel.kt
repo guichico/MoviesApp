@@ -43,7 +43,7 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
                 recommendations.postValue(it.results)
             }, {
                 loadingVisibility.postValue(false)
-                message.postValue("error to load recommendations")
+                message.postValue("Error to load recommendations, tap to try again")
             })
     }
 }

@@ -60,7 +60,7 @@ class MoviesListActivity : AppCompatActivity(), SearchView.OnQueryTextListener, 
 
         val adapter = MoviesAdapter { moviesViewModel.retry() }
         binding.rvMovies.adapter = adapter
-        moviesViewModel.searchedMovies.observe(this, Observer(adapter::submitList))
+        moviesViewModel.movies.observe(this, Observer(adapter::submitList))
     }
 
     private fun setObservers() {
