@@ -28,13 +28,18 @@ class PopularMoviesDataSource(
         compositeDisposable.add(
             movieApi.getPopularMovies(1)
                 .subscribe({
-                    state.postValue(NetworkState.DONE)
-                    initial.postValue(NetworkState.DONE)
+                    if (it.total_results == 0) {
+                        state.postValue(NetworkState.error("There are no movies today."))
+                        initial.postValue(NetworkState.error("There are no movies today."))
+                    } else {
+                        state.postValue(NetworkState.DONE)
+                        initial.postValue(NetworkState.DONE)
+                    }
 
                     callback.onResult(it.results, null, 2)
                 }, {
-                    state.postValue(NetworkState.ERROR)
-                    initial.postValue(NetworkState.ERROR)
+                    state.postValue(NetworkState.error(it.message))
+                    initial.postValue(NetworkState.error(it.message))
 
                     setRetry(Action { loadInitial(params, callback) })
                 })
@@ -49,7 +54,7 @@ class PopularMoviesDataSource(
                     state.postValue(NetworkState.DONE)
                     callback.onResult(it.results, params.key + 1)
                 }, {
-                    state.postValue(NetworkState.ERROR)
+                    state.postValue(NetworkState.error(it.message))
                     setRetry(Action { loadAfter(params, callback) })
                 })
         )

@@ -69,9 +69,18 @@ class MoviesListActivity : AppCompatActivity(), SearchView.OnQueryTextListener, 
 
             if (it != NetworkState.LOADING)
                 moviesViewModel.isFirstLoading.postValue(false)
+
+            if (it.status == NetworkState.ERROR.status) {
+                moviesViewModel.hasError.postValue(true)
+                moviesViewModel.message.postValue(it.msg)
+            } else {
+                moviesViewModel.hasError.postValue(false)
+                moviesViewModel.message.postValue("")
+            }
         })
         moviesViewModel.refreshState.observe(this, Observer {
-            binding.srMovies.isRefreshing = it == NetworkState.LOADING
+            if (!moviesViewModel.isFirstLoading.value!!)
+                binding.srMovies.isRefreshing = it == NetworkState.LOADING
         })
     }
 }

@@ -44,12 +44,16 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("value")
-    fun currencyFormat(textView: TextView, value: Int) {
-        val nf = NumberFormat.getCurrencyInstance(locale)
-        val pattern = (nf as DecimalFormat).toPattern()
-        val newPattern = pattern.replace("\u00A4", "").trim { it <= ' ' }
-        val newFormat = DecimalFormat(newPattern)
-        textView.text = newFormat.format(value)
+    fun currencyFormat(textView: TextView, value: Long) {
+        if (value == 0L) {
+            textView.text = "-"
+        } else {
+            val nf = NumberFormat.getCurrencyInstance(locale)
+            val pattern = (nf as DecimalFormat).toPattern()
+            val newPattern = pattern.replace("\u00A4", "").trim { it <= ' ' }
+            val newFormat = DecimalFormat(newPattern)
+            textView.text = String.format("$%s", newFormat.format(value))
+        }
     }
 
     @JvmStatic
@@ -66,10 +70,14 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("hourAndMinutes")
+    @BindingAdapter("minutes")
     fun convertToHourAndMinutes(textView: TextView, minutes: Int) {
-        val hours = minutes / 60 //since both are ints, you get an int
-        val minutes = minutes % 60
-        textView.text = String.format("%dh%02dm", hours, minutes)
+        if (minutes == 0) {
+            textView.text = "-"
+        } else {
+            val hours = minutes / 60
+            val minutes = minutes % 60
+            textView.text = String.format("%dh%02dm", hours, minutes)
+        }
     }
 }

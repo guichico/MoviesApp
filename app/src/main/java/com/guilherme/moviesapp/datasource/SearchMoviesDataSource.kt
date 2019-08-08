@@ -29,13 +29,18 @@ class SearchMoviesDataSource(
         compositeDisposable.add(
             movieApi.searchMovies(query, 1)
                 .subscribe({
-                    state.postValue(NetworkState.DONE)
-                    initial.postValue(NetworkState.DONE)
+                    if (it.total_results == 0) {
+                        state.postValue(NetworkState.error("There are no movies that matched your query."))
+                        initial.postValue(NetworkState.error("There are no movies that matched your query."))
+                    } else {
+                        state.postValue(NetworkState.DONE)
+                        initial.postValue(NetworkState.DONE)
+                    }
 
                     callback.onResult(it.results, null, 2)
                 }, {
-                    state.postValue(NetworkState.ERROR)
-                    initial.postValue(NetworkState.ERROR)
+                    state.postValue(NetworkState.error(it.message))
+                    initial.postValue(NetworkState.error(it.message))
 
                     setRetry(Action { loadInitial(params, callback) })
                 })
@@ -51,7 +56,7 @@ class SearchMoviesDataSource(
                     state.postValue(NetworkState.DONE)
                     callback.onResult(it.results, params.key + 1)
                 }, {
-                    state.postValue(NetworkState.ERROR)
+                    state.postValue(NetworkState.error(it.message))
                     setRetry(Action { loadAfter(params, callback) })
                 })
         )

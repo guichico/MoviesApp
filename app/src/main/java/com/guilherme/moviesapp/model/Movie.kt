@@ -16,8 +16,8 @@ data class Movie(
     val adult: Boolean,
     val overview: String,
     val release_date: String,
-    val budget: Int,
-    val revenue: Int,
+    val budget: Long,
+    val revenue: Long,
     val runtime: Int
 ) : Serializable {
     constructor() : this(

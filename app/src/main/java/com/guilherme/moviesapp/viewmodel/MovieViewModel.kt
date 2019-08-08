@@ -41,6 +41,14 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
             .subscribe({
                 loadingVisibility.postValue(false)
                 recommendations.postValue(it.results)
+
+                if (it.total_results == 0)
+                    message.postValue(
+                        String.format(
+                            "We don't have enough data to suggest any movies based on %s.",
+                            movie.value?.title
+                        )
+                    )
             }, {
                 loadingVisibility.postValue(false)
                 message.postValue("Error to load recommendations, tap to try again")

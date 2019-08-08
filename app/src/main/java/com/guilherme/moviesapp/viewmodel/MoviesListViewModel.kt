@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.guilherme.moviesapp.api.MovieApi
-import com.guilherme.moviesapp.api.NetworkState
 import com.guilherme.moviesapp.datasource.Listing
 import com.guilherme.moviesapp.datasource.PopularMoviesDataSourceFactory
 import com.guilherme.moviesapp.datasource.SearchMoviesDataSourceFactory
@@ -27,6 +26,7 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
     private val searchCompositeDisposable = CompositeDisposable()
 
     val isFirstLoading = MutableLiveData<Boolean>()
+    val hasError = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
     private val config = PagedList.Config.Builder()
@@ -37,6 +37,7 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
 
     init {
         isFirstLoading.postValue(true)
+        hasError.postValue(false)
         message.postValue("")
     }
 
@@ -64,10 +65,6 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
             retry = { factory.moviesDataSourceLiveData.value?.retry() },
             refresh = { factory.moviesDataSourceLiveData.value?.invalidate() },
             refreshState = Transformations.switchMap(factory.moviesDataSourceLiveData) { it.initial })
-    }
-
-    fun getNetworkState(): NetworkState {
-        return networkState.value!!
     }
 
     fun refresh() {
