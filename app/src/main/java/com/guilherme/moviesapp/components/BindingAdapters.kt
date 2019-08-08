@@ -60,7 +60,16 @@ object BindingAdapters {
                 .load(url)
                 .placeholder(R.color.grayLight)
                 .fit()
+                .centerCrop()
                 .into(imageView)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("hourAndMinutes")
+    fun convertToHourAndMinutes(textView: TextView, minutes: Int) {
+        val hours = minutes / 60 //since both are ints, you get an int
+        val minutes = minutes % 60
+        textView.text = String.format("%dh%02dm", hours, minutes)
     }
 }

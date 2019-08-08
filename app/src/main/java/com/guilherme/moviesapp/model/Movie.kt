@@ -16,6 +16,7 @@ data class Movie(
     val adult: Boolean,
     val overview: String,
     val release_date: String,
+    val budget: Int,
     val revenue: Int,
     val runtime: Int
 ) : Serializable {
@@ -33,6 +34,7 @@ data class Movie(
         false,
         "",
         "",
+        0,
         0,
         0
     )

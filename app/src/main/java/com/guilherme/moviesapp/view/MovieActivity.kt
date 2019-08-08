@@ -14,28 +14,37 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MovieActivity : AppCompatActivity() {
 
     private val movieViewModel: MovieViewModel by viewModel()
+    private lateinit var binding: ActivityMovieBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityMovieBinding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
-        val movie = intent.getSerializableExtra("movie") as Movie
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_movie)
+
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        binding.toolbar.setNavigationOnClickListener { finish() }
 
         binding.viewModel = movieViewModel
         binding.lifecycleOwner = this
 
-        binding.vpRecommendations.pageMargin = 40
+        val movie = intent.getSerializableExtra("movie") as Movie
 
         movieViewModel.movie.postValue(movie)
         movieViewModel.getMovieDetails(movie.id)
 
+        setRecommendations(movie.id)
+
+        binding.executePendingBindings()
+    }
+
+    private fun setRecommendations(movieId: Long) {
+        binding.vpRecommendations.pageMargin = 40
         movieViewModel.recommendations.observe(this,
             Observer { movies ->
                 binding.vpRecommendations.adapter = RecommendationsAdapter(movies)
             })
 
-        movieViewModel.getRecommendations(movie.id)
-
-        binding.executePendingBindings()
+        movieViewModel.getRecommendations(movieId)
     }
 }

@@ -25,7 +25,7 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
     private val popularCompositeDisposable = CompositeDisposable()
     private val searchCompositeDisposable = CompositeDisposable()
 
-    val loadingVisibility = MutableLiveData<Boolean>()
+    val isFirstLoading = MutableLiveData<Boolean>()
     val message = MutableLiveData<String>()
 
     private val config = PagedList.Config.Builder()
@@ -35,7 +35,7 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
         .build()
 
     init {
-        loadingVisibility.postValue(true)
+        isFirstLoading.postValue(true)
         message.postValue("")
     }
 
@@ -64,7 +64,6 @@ class MoviesListViewModel(private val movieApi: MovieApi) : ViewModel() {
             refresh = { factory.moviesDataSourceLiveData.value?.invalidate() },
             refreshState = Transformations.switchMap(factory.moviesDataSourceLiveData) { it.initial })
     }
-
 
     fun refresh() {
         itemResult.value?.refresh?.invoke()

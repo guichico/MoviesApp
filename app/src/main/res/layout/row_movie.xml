@@ -32,11 +32,14 @@
                 android:layout_height="wrap_content"
                 android:text="@{movie.title}"
                 android:textColor="@color/black"
-                android:textSize="18dp"/>
+                android:textSize="16dp"
+                android:maxLines="2"
+                android:ellipsize="end"/>
 
         <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="bottom"
                 app:year="@{movie.release_date}"
                 android:textSize="12dp"/>
 
