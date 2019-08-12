@@ -17,8 +17,6 @@ import org.koin.test.AutoCloseKoinTest
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import java.lang.Exception
-import java.util.*
 
 @RunWith(Parameterized::class)
 class MovieViewModelUnitTest(private val movie: Movie, private val name: String) : AutoCloseKoinTest() {

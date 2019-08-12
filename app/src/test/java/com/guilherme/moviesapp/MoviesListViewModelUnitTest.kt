@@ -4,13 +4,11 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.guilherme.moviesapp.api.MovieApi
 import com.guilherme.moviesapp.model.SearchResult
 import com.guilherme.moviesapp.viewmodel.MoviesListViewModel
-import io.reactivex.Observable
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
 class MoviesListViewModelUnitTest {

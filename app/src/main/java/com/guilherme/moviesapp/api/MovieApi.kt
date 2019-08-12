@@ -2,6 +2,7 @@ package com.guilherme.moviesapp.api
 
 import com.guilherme.moviesapp.model.Movie
 import com.guilherme.moviesapp.model.SearchResult
+import com.guilherme.moviesapp.model.VideoResult
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -23,4 +24,7 @@ interface MovieApi {
 
     @GET("movie/{movie_id}/recommendations")
     fun getRecommendations(@Path("movie_id") movieId: Long): Observable<SearchResult>
+
+    @GET("movie/{movie_id}/videos")
+    fun getVideos(@Path("movie_id") movieId: Long): Observable<VideoResult>
 }

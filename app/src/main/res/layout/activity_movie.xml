@@ -39,12 +39,25 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                <ImageView
-                        android:id="@+id/imgMovie"
-                        android:layout_width="match_parent"
-                        android:layout_height="260dp"
-                        android:adjustViewBounds="true"
-                        app:imgUrl="@{Constants.getImgPath(780) + viewModel.movie.backdrop_path}"/>
+                <RelativeLayout android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:id="@+id/imgMovie"
+                            android:layout_width="match_parent"
+                            android:layout_height="260dp"
+                            android:adjustViewBounds="true"
+                            app:imgUrl="@{Constants.getImgPath(780) + viewModel.movie.backdrop_path}"/>
+
+                    <ImageView
+                            android:id="@+id/btnTrailer"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_centerInParent="true"
+                            android:src="@android:drawable/ic_media_play"
+                            android:visibility="@{safeUnbox(viewModel.hasTrailer) ?  View.VISIBLE : View.GONE}"/>
+
+                </RelativeLayout>
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -171,6 +184,51 @@
                             android:text="@{viewModel.movie.overview}"
                             android:textColor="@color/gray"
                             android:textSize="12dp"/>
+
+                    <View android:layout_width="match_parent"
+                          android:layout_height="1dp"
+                          android:background="@color/grayExtraMedium"
+                          android:layout_marginTop="15dp"
+                          android:layout_marginBottom="15dp"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Videos"
+                            android:textColor="@color/black"
+                            android:textSize="16dp"/>
+
+                    <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp">
+
+                        <ProgressBar
+                                android:layout_width="40dp"
+                                android:layout_height="match_parent"
+                                android:layout_centerInParent="true"
+                                android:indeterminateTint="@color/green"
+                                android:indeterminateTintMode="src_in"
+                                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE}"/>
+
+                        <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginRight="30dp"
+                                android:gravity="center"
+                                android:padding="15dp"
+                                android:layout_centerInParent="true"
+                                android:text="@{viewModel.message}"
+                                android:textSize="16dp"
+                                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ? View.GONE : View.VISIBLE }"/>
+
+                        <androidx.viewpager.widget.ViewPager
+                                android:id="@+id/vp_videos"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="10dp"/>
+
+                    </RelativeLayout>
 
                     <View android:layout_width="match_parent"
                           android:layout_height="1dp"

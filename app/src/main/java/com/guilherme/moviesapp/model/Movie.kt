@@ -5,7 +5,6 @@ import java.io.Serializable
 data class Movie(
     val id: Long = 0,
     val vote_count: Int = 0,
-    val video: Boolean = false,
     val vote_average: Double = 0.0,
     val title: String = "",
     val popularity: Double = 0.0,
