@@ -80,4 +80,11 @@ object BindingAdapters {
             textView.text = String.format("%dh%02dm", hours, minutes)
         }
     }
+
+    @JvmStatic
+    @BindingAdapter("language")
+    fun displayLanguage(textView: TextView, language: String?) {
+        if (!language.isNullOrEmpty())
+            textView.text = Locale(language).getDisplayLanguage(locale)
+    }
 }
