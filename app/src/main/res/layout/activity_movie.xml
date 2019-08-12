@@ -208,7 +208,7 @@
                                 android:layout_centerInParent="true"
                                 android:indeterminateTint="@color/green"
                                 android:indeterminateTintMode="src_in"
-                                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE}"/>
+                                android:visibility="@{safeUnbox(viewModel.loadingVisibilityVideos) ?  View.VISIBLE : View.GONE}"/>
 
                         <TextView
                                 android:layout_width="match_parent"
@@ -218,9 +218,9 @@
                                 android:gravity="center"
                                 android:padding="15dp"
                                 android:layout_centerInParent="true"
-                                android:text="@{viewModel.message}"
+                                android:text="@{viewModel.messageVideos}"
                                 android:textSize="16dp"
-                                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ? View.GONE : View.VISIBLE }"/>
+                                android:visibility="@{safeUnbox(viewModel.loadingVisibilityVideos) ? View.GONE : View.VISIBLE }"/>
 
                         <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/vp_videos"
@@ -253,7 +253,7 @@
                                 android:layout_centerInParent="true"
                                 android:indeterminateTint="@color/green"
                                 android:indeterminateTintMode="src_in"
-                                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ?  View.VISIBLE : View.GONE}"/>
+                                android:visibility="@{safeUnbox(viewModel.loadingVisibilityRecommendations) ?  View.VISIBLE : View.GONE}"/>
 
                         <TextView
                                 android:layout_width="match_parent"
@@ -263,9 +263,9 @@
                                 android:gravity="center"
                                 android:padding="15dp"
                                 android:layout_centerInParent="true"
-                                android:text="@{viewModel.message}"
+                                android:text="@{viewModel.messageRecommendations}"
                                 android:textSize="16dp"
-                                android:visibility="@{safeUnbox(viewModel.loadingVisibility) ? View.GONE : View.VISIBLE }"/>
+                                android:visibility="@{safeUnbox(viewModel.loadingVisibilityRecommendations) ? View.GONE : View.VISIBLE }"/>
 
                         <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/vp_recommendations"

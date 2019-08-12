@@ -11,14 +11,17 @@ import io.reactivex.schedulers.Schedulers
 
 class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
     val movie = MutableLiveData<Movie>()
-    val recommendations = MutableLiveData<List<Movie>>()
-
-    val trailerKey = MutableLiveData<String>()
     val videos = MutableLiveData<List<Video>>()
+    val recommendations = MutableLiveData<List<Movie>>()
+    val trailerKey = MutableLiveData<String>()
 
-    val loadingVisibility = MutableLiveData<Boolean>()
-    val message = MutableLiveData<String>()
     val hasTrailer = MutableLiveData<Boolean>()
+
+    val loadingVisibilityVideos = MutableLiveData<Boolean>()
+    val messageVideos = MutableLiveData<String>()
+
+    val loadingVisibilityRecommendations = MutableLiveData<Boolean>()
+    val messageRecommendations = MutableLiveData<String>()
 
     private var disposableMovie: Disposable? = null
     private var disposableVideos: Disposable? = null
@@ -35,6 +38,9 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
     }
 
     fun getVideos(movieId: Long) {
+        loadingVisibilityVideos.postValue(true)
+        messageVideos.postValue("")
+
         if (disposableVideos != null)
             disposableVideos!!.dispose()
 
@@ -42,13 +48,20 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
+                loadingVisibilityVideos.postValue(false)
+
                 var vs = it.results
 
-                getVideoTrailer(vs)
+                if (vs.isNullOrEmpty()) {
+                    messageRecommendations.postValue("We don't have any video for this movie yet.")
+                } else {
+                    getVideoTrailer(vs)
 
-                videos.postValue(vs)
+                    videos.postValue(vs)
+                }
             }, {
-
+                loadingVisibilityVideos.postValue(false)
+                messageVideos.postValue("Error to load videos, tap to try again")
             })
     }
 
@@ -67,8 +80,8 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
     }
 
     fun getRecommendations(movieId: Long) {
-        loadingVisibility.postValue(true)
-        message.postValue("")
+        loadingVisibilityRecommendations.postValue(true)
+        messageRecommendations.postValue("")
 
         if (disposableRecommendations != null)
             disposableRecommendations!!.dispose()
@@ -77,19 +90,19 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                loadingVisibility.postValue(false)
+                loadingVisibilityRecommendations.postValue(false)
                 recommendations.postValue(it.results)
 
                 if (it.total_results == 0)
-                    message.postValue(
+                    messageRecommendations.postValue(
                         String.format(
                             "We don't have enough data to suggest any movies based on %s.",
                             movie.value?.title
                         )
                     )
             }, {
-                loadingVisibility.postValue(false)
-                message.postValue("Error to load recommendations, tap to try again")
+                loadingVisibilityRecommendations.postValue(false)
+                messageRecommendations.postValue("Error to load recommendations, tap to try again")
             })
     }
 }
