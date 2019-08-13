@@ -55,30 +55,42 @@ class MovieActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_share -> {
-                val movie = movieViewModel.movie.value
-                movie?.let {
-                    // the link could be shorter, but I am using the same as the website
-                    val intent = Intent()
-                    intent.action = Intent.ACTION_SEND
-                    intent.putExtra(Intent.EXTRA_TEXT, getMovieShareLink(it))
-                    intent.type = "text/plain"
-                    startActivity(intent)
-                }
-            }
+            R.id.action_share -> share()
+            R.id.action_rate -> rate()
+            R.id.action_favorite -> favorite()
         }
 
         return super.onOptionsItemSelected(item)
     }
 
-    private fun getMovieShareLink(movie: Movie) : String {
+    private fun share() {
+        val movie = movieViewModel.movie.value
+        movie?.let {
+            // the link could be shorter, but I am using the same as the website
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, getMovieShareLink(it))
+            intent.type = "text/plain"
+            startActivity(intent)
+        }
+    }
+
+    private fun getMovieShareLink(movie: Movie): String {
         var title = movie.title.toLowerCase()
         title = title.replace(":", "")
         title = title.replace("-", "")
-        title = title.replace("[^a-zA-Z0-9]+","")
+        title = title.replace("[^a-zA-Z0-9]+", "")
         title = title.replace(" ", "-")
 
         return Constants.share_path + "movie/" + movie.id + "-" + title
+    }
+
+    private fun rate() {
+
+    }
+
+    private fun favorite() {
+
     }
 
     private fun playVideo() {
