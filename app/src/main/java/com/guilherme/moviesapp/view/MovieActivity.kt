@@ -1,6 +1,8 @@
 package com.guilherme.moviesapp.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -13,6 +15,7 @@ import com.guilherme.moviesapp.view.adapters.RecommendationsAdapter
 import com.guilherme.moviesapp.view.adapters.VideosAdapter
 import com.guilherme.moviesapp.viewmodel.MovieViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import android.content.Intent
 
 class MovieActivity : AppCompatActivity() {
 
@@ -43,6 +46,39 @@ class MovieActivity : AppCompatActivity() {
         binding.btnTrailer.setOnClickListener { playVideo() }
 
         binding.executePendingBindings()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_movie, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_share -> {
+                val movie = movieViewModel.movie.value
+                movie?.let {
+                    // the link could be shorter, but I am using the same as the website
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_SEND
+                    intent.putExtra(Intent.EXTRA_TEXT, getMovieShareLink(it))
+                    intent.type = "text/plain"
+                    startActivity(intent)
+                }
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun getMovieShareLink(movie: Movie) : String {
+        var title = movie.title.toLowerCase()
+        title = title.replace(":", "")
+        title = title.replace("-", "")
+        title = title.replace("[^a-zA-Z0-9]+","")
+        title = title.replace(" ", "-")
+
+        return Constants.share_path + "movie/" + movie.id + "-" + title
     }
 
     private fun playVideo() {
