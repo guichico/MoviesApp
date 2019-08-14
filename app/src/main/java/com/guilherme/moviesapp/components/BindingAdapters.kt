@@ -1,10 +1,16 @@
 package com.guilherme.moviesapp.components
 
 import android.graphics.Typeface
+import android.view.Gravity
 import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TableRow
 import android.widget.TextView
+import androidx.core.view.marginRight
 import androidx.databinding.BindingAdapter
+import com.google.android.flexbox.FlexboxLayout
 import com.guilherme.moviesapp.R
+import com.guilherme.moviesapp.model.Genres
 import com.squareup.picasso.Picasso
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -102,5 +108,26 @@ object BindingAdapters {
     fun displayLanguage(textView: TextView, language: String?) {
         if (!language.isNullOrEmpty())
             textView.text = Locale(language).getDisplayLanguage(locale)
+    }
+
+    @JvmStatic
+    @BindingAdapter("genres")
+    fun addGenres(layout: FlexboxLayout, genres: List<Genres>?) {
+        genres?.forEach {
+            val context = layout.context
+
+            var textView = TextView(context)
+            textView.text = it.name
+            textView.textSize = 12f
+            textView.gravity = Gravity.CENTER
+            textView.background = context.resources.getDrawable(R.drawable.text_view_rounded)
+
+            var params = TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0, 10, 10, 0)
+
+            textView.layoutParams = params
+
+            layout.addView(textView)
+        }
     }
 }
