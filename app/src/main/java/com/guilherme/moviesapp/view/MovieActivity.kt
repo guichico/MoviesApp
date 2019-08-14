@@ -56,8 +56,6 @@ class MovieActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_share -> share()
-            R.id.action_rate -> rate()
-            R.id.action_favorite -> favorite()
         }
 
         return super.onOptionsItemSelected(item)
@@ -83,14 +81,6 @@ class MovieActivity : AppCompatActivity() {
         title = title.replace(" ", "-")
 
         return Constants.share_path + "movie/" + movie.id + "-" + title
-    }
-
-    private fun rate() {
-
-    }
-
-    private fun favorite() {
-
     }
 
     private fun playVideo() {
