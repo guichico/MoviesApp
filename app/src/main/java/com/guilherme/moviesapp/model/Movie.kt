@@ -17,5 +17,6 @@ data class Movie(
     val release_date: String = "",
     val budget: Long = 0L,
     val revenue: Long = 0L,
-    val runtime: Int = 0
+    val runtime: Int = 0,
+    val genres: List<Genres> = emptyList()
 ) : Serializable

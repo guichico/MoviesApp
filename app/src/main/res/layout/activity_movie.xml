@@ -103,43 +103,21 @@
                             <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:layout_marginTop="5dp">
 
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textSize="12dp"
-                                        android:text="Original language:"/>
+                                        android:text="Release date:"/>
 
                                 <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:textSize="12dp"
                                         android:layout_marginLeft="5dp"
-                                        android:inputType="textCapSentences"
-                                        app:language="@{viewModel.movie.original_language}"/>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"
-                                    android:orientation="horizontal">
-
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Runtime:"
-                                        android:textSize="12dp"/>
-
-                                <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="5dp"
-                                        android:textSize="12dp"
-                                        app:minutes="@{viewModel.movie.runtime}"/>
+                                        app:date="@{viewModel.movie.release_date}"/>
 
                             </LinearLayout>
 
@@ -183,6 +161,83 @@
                                         app:value="@{viewModel.movie.revenue}"/>
 
                             </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent"
+                          android:layout_height="1dp"
+                          android:background="@color/grayExtraMedium"
+                          android:layout_marginTop="15dp"
+                          android:layout_marginBottom="15dp"/>
+
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1">
+
+                            <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_star"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="12dp"
+                                    android:text="@{Double.toString(viewModel.movie.vote_average)}"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1">
+
+                            <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_language"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="12dp"
+                                    android:inputType="textCapSentences"
+                                    app:language="@{viewModel.movie.original_language}"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical"
+                                android:layout_weight="1">
+
+                            <ImageView
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/ic_time"/>
+
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:textSize="12dp"
+                                    app:minutes="@{viewModel.movie.runtime}"/>
 
                         </LinearLayout>
 

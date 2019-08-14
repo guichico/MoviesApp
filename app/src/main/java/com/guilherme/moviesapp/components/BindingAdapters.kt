@@ -43,6 +43,22 @@ object BindingAdapters {
     }
 
     @JvmStatic
+    @BindingAdapter("date")
+    fun dateFormat(textView: TextView, date: String?) {
+        if (!date.isNullOrEmpty()) {
+            val formatString = SimpleDateFormat("yyyy-MM-dd", locale)
+            val formatDate = SimpleDateFormat("MMMM dd, yyyy", locale)
+
+            var movieDate = formatString.parse(date)
+
+            var calendar = Calendar.getInstance(locale)
+            calendar.time = movieDate
+
+            textView.text = formatDate.format(movieDate)
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("value")
     fun currencyFormat(textView: TextView, value: Long) {
         if (value == 0L) {
