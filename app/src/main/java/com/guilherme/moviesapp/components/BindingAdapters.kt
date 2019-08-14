@@ -113,6 +113,8 @@ object BindingAdapters {
     @JvmStatic
     @BindingAdapter("genres")
     fun addGenres(layout: FlexboxLayout, genres: List<Genres>?) {
+        layout.removeAllViews()
+
         genres?.forEach {
             val context = layout.context
 
@@ -128,6 +130,15 @@ object BindingAdapters {
             textView.layoutParams = params
 
             layout.addView(textView)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("rating")
+    fun displayRating(textView: TextView, rating: Double) {
+        rating.let {
+            if (it == 0.0) textView.text = "-"
+            else textView.text = it.toString()
         }
     }
 }

@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{video.name}"
                 android:textColor="@color/black"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:layout_marginTop="5dp"/>

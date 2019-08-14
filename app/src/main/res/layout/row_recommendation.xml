@@ -40,7 +40,7 @@
                     android:textColor="@color/black"
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/lbl_vote_average"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:ellipsize="end"
                     android:maxLines="2"/>
 
@@ -51,8 +51,8 @@
                     android:layout_toLeftOf="@+id/img_star"
                     android:layout_marginLeft="15dp"
                     android:textColor="@color/black"
-                    android:text="@{Double.toString(movie.vote_average)}"
-                    android:textSize="15dp"/>
+                    android:textSize="15sp"
+                    app:rating="@{movie.vote_average}"/>
 
             <ImageView
                     android:id="@+id/img_star"

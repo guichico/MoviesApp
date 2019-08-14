@@ -53,7 +53,7 @@ class MovieViewModel(private val movieApi: MovieApi) : ViewModel() {
                 var vs = it.results
 
                 if (vs.isNullOrEmpty()) {
-                    messageRecommendations.postValue("We don't have any video for this movie yet.")
+                    messageVideos.postValue("We don't have any video for this movie yet.")
                 } else {
                     getVideoTrailer(vs)
 
